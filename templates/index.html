@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+
+<header class="main-header" role="banner">
+
+<link rel="stylesheet" type="text/css"
+          href="https://fonts.googleapis.com/css?family=Changa">
+
+<style type="text/css">
+  
+    .main-header {
+  text-align: left;
+  width: 100%;
+  height: 90px;
+  font-family: 'Changa', serif;
+  font-size: 40px;
+  background-color: #117A65;
+  color: white;
+  line-height:85px; 
+  text-shadow: 1px 1px 1px #aaa;
+}
+
+</style>
+<!-- <img src="https://c7.staticflickr.com/8/7337/27520245846_a867febf4f_k.jpg" width= "100%";  height= "80"; alt="Banner Image"; align="left" /> -->
+  
+
+  <div class="main-header "> &nbsp;TrafficTracker</div>
+
+
+
+</header>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <style type="text/css">
+
+    body, html{width: 98%;height: 100%; margin: 10px; font-family:"courier"; background-color: #EAEDED; }
+
+
+    #allmap{height:100%;width:100%;}
+    #r-result,#r-result table{width:95%;}
+
+  div{display:inline-block}
+
+
+
+
+  p.map {
+    border-style: solid;
+    border-width: medium;
+    border-color: #138D75;
+    margin-top: 10px;
+    }
+
+  .button {
+    background-color: #117A65;
+    border: none;
+    color: white;
+    padding: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+    </style>
+
+  <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DcoirgVzBcSqhqr82bhY2VFe5dIRpLP8"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  <title>TrafficTracker</title>
+</head>
+
+
+<body>
+
+  <div id="start"><font color="#0E6655">start:</font> <input type="text" id="suggestId1" size="30"/></div>
+
+  <div id="end"><font color="#0E6655">end: </font><input type="text" id="suggestId2" size="30"/></div>
+
+  <div id="searchResultPanel1" style="border:1px solid #82E0AA;width:150px;height:auto; display:none;"></div>
+
+  <div id="searchResultPanel2" style="border:1px solid #82E0AA;width:150px;height:auto; display:none;"></div>
+
+  <div id="driving_way">
+    <select>
+      <option value="0">minimum time</option>
+      <option value="1">shortest path</option>
+      <option value="2">avoid highway</option>
+    </select> 
+    <input class = "button"  id="result" value="search"/>
+  </div>
+  <div id="refresh"><input class = "button" value="refresh" /></div>
+
+  <p class = "map" <div id="allmap">> </div></p>
+  <div id="r-result"></div>
+
+</body>
+</html>
+<script type="text/javascript">
+  
+  var map = new BMap.Map("allmap");
+  map.centerAndZoom(new BMap.Point(121.129382,41.114900), 30);
+
+
+  var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL}); 
+  map.addControl(top_right_navigation); 
+
+    var point1 = new BMap.Point(121.129382,41.114900);
+    var point2 = new BMap.Point(121.130719,41.115184);
+    var point3 = new BMap.Point(121.128413,41.113173);
+    var point4 = new BMap.Point(121.127496,41.112951);
+    var point5 = new BMap.Point(121.127496,41.112951);
+  
+    function ComplexCustomOverlay(point, text, mouseoverText){
+      this._point = point;
+      this._text = text;
+      this._overText = mouseoverText;
+    }
+    ComplexCustomOverlay.prototype = new BMap.Overlay();
+    ComplexCustomOverlay.prototype.initialize = function(map){
+      this._map = map;
+      var div = this._div = document.createElement("div");
+      div.style.position = "absolute";
+      div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+      div.style.backgroundColor = "#EE5D5B";
+      div.style.border = "1px solid #BC3B3A";
+      div.style.color = "white";
+      div.style.height = "18px";
+      div.style.padding = "2px";
+      div.style.lineHeight = "18px";
+      div.style.whiteSpace = "nowrap";
+      div.style.MozUserSelect = "none";
+      div.style.fontSize = "12px"
+      var span = this._span = document.createElement("span");
+      div.appendChild(span);
+      span.appendChild(document.createTextNode(this._text));      
+      var that = this;
+
+      var arrow = this._arrow = document.createElement("div");
+      arrow.style.background = "url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat";
+      arrow.style.position = "absolute";
+      arrow.style.width = "11px";
+      arrow.style.height = "10px";
+      arrow.style.top = "22px";
+      arrow.style.left = "10px";
+      arrow.style.overflow = "hidden";
+      div.appendChild(arrow);
+     
+      div.onmouseover = function(){
+        this.style.backgroundColor = "#45B39D";
+        this.style.borderColor = "#0E6251";
+        this.getElementsByTagName("span")[0].innerHTML = that._overText;
+        arrow.style.backgroundPosition = "0px -20px";
+      }
+
+      div.onmouseout = function(){
+        this.style.backgroundColor = "#EE5D5B";
+        this.style.borderColor = "#BC3B3A";
+        this.getElementsByTagName("span")[0].innerHTML = that._text;
+        arrow.style.backgroundPosition = "0px 0px";
+      }
+
+      map.getPanes().labelPane.appendChild(div);
+      
+      return div;
+    }
+    ComplexCustomOverlay.prototype.draw = function(){
+      var map = this._map;
+      var pixel = map.pointToOverlayPixel(this._point);
+      this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
+      this._div.style.top  = pixel.y - 30 + "px";
+    }
+
+
+    var carNumber1 = "{{n_car[0]}}"
+    var carNumber2 = "{{n_car[1]}}"
+    var carNumber3 = "{{n_car[2]}}"
+    var carNumber4 = "{{n_car[3]}}"
+   
+    var speed1 = "{{avg_speed[0]}}"
+    var speed2 = "{{avg_speed[1]}}"
+    var speed3 = "{{avg_speed[2]}}"
+    var speed4 = "{{avg_speed[3]}}"
+
+
+
+    var txt1 = "camera1", mouseoverTxt1 = txt1 + " location is: 121.129382,41.114900" + ";  Current No. of car: " + carNumber1 + ";  AverageSpeed: " + speed1;
+    var txt2 = "camera2", mouseoverTxt2 = txt2 + " location is: 121.130719,41.115184" + ";  Current No. of car: " + carNumber2 + ";  AverageSpeed: " + speed2;
+    var txt3 = "camera3", mouseoverTxt3 = txt3 + " location is: 121.128413,41.113173" + ";  Current No. of car: " + carNumber3 + ";  AverageSpeed: " + speed3;
+    var txt4 = "camera4", mouseoverTxt4 = txt4 + " location is: 121.127496,41.112951" + ";  Current No. of car: " + carNumber4 + ";  AverageSpeed: " + speed4;
+    var txt5 = "camera5", mouseoverTxt5 = txt5 + " location is: 121.127496,41.112951" ;
+
+
+    var myCompOverlay1 = new ComplexCustomOverlay(point1, "camera1",mouseoverTxt1);
+    var myCompOverlay2 = new ComplexCustomOverlay(point2, "camera2",mouseoverTxt2);
+    var myCompOverlay3 = new ComplexCustomOverlay(point3, "camera3",mouseoverTxt3);    
+    var myCompOverlay4 = new ComplexCustomOverlay(point4, "camera4",mouseoverTxt4);
+    var myCompOverlay5 = new ComplexCustomOverlay(point5, "camera5",mouseoverTxt5);
+
+    map.addOverlay(myCompOverlay1);
+    map.addOverlay(myCompOverlay2);
+    map.addOverlay(myCompOverlay3);
+    map.addOverlay(myCompOverlay4);
+    map.addOverlay(myCompOverlay5);
+
+
+//bring in route color
+
+  var color1
+  var color2
+  var color3
+  var color4
+
+color1 = '{{colors[0]}}'
+color2 = '{{colors[1]}}'
+color3 = '{{colors[2]}}'
+color4 = '{{colors[3]}}'
+
+  var polyline1 = new BMap.Polyline([
+    point1, point2
+ ],    
+ {strokeColor:color1, strokeWeight:6, strokeOpacity:0.5}    
+);    
+map.addOverlay(polyline1);
+  
+var polyline2 = new BMap.Polyline([    
+   point2, point3    
+ ],    
+ {strokeColor:color2, strokeWeight:6, strokeOpacity:0.5}    
+);    
+map.addOverlay(polyline2);  
+  
+var polyline3 = new BMap.Polyline([    
+   point3, point4  
+ ],    
+ {strokeColor:color3, strokeWeight:6, strokeOpacity:0.5}    
+);    
+map.addOverlay(polyline3);  
+  
+var polyline4 = new BMap.Polyline([    
+   point4, point5    
+ ],    
+ {strokeColor:color4, strokeWeight:6, strokeOpacity:0.5}    
+);    
+map.addOverlay(polyline4);  
+ 
+  function G(id) {
+    return document.getElementById(id);
+  }
+
+  var ac1 = new BMap.Autocomplete(    //new an autocomplete object
+    {"input" : "suggestId1"
+    ,"location" : map
+  });
+
+  var ac2 = new BMap.Autocomplete(    //again
+    {"input" : "suggestId2"
+    ,"location" : map
+  });
+
+  ac1.addEventListener("onhighlight", function(e) {  //event when mouse on list
+  var str = "";
+    var _value = e.fromitem.value;
+    var value1 = "";
+    if (e.fromitem.index > -1) {
+      value1 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    }    
+    str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value1;
+    
+    value1 = "";
+    if (e.toitem.index > -1) {
+      _value = e.toitem.value;
+      value1 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    }    
+    str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value1;
+    G("searchResultPanel1").innerHTML = str;
+  });
+
+  ac2.addEventListener("onhighlight", function(e) {  
+  var str = "";
+    var _value = e.fromitem.value;
+    var value2 = "";
+    if (e.fromitem.index > -1) {
+      value2 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    }    
+    str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value2;
+    
+    value2 = "";
+    if (e.toitem.index > -1) {
+      _value = e.toitem.value;
+      value2 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    }    
+    str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value2;
+    G("searchResultPanel2").innerHTML = str;
+  });
+
+  var myValue1;
+  ac1.addEventListener("onconfirm", function(e) {    //event when click list
+  var _value = e.item.value;
+    myValue1 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    G("searchResultPanel1").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue1;
+    setPlace1();
+  });
+
+  var myValue2;
+  ac2.addEventListener("onconfirm", function(e) {    //
+  var _value = e.item.value;
+    myValue2 = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+    G("searchResultPanel2").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue2;
+    setPlace2();
+  });
+
+  function setPlace1(){
+ //   map.clearOverlays();    //clear all overlays on the map
+    function showResults1(){
+      var pp1 = local.getResults().getPoi(0).point;    //get the first poi
+  //    map.centerAndZoom(pp1, 18);
+      map.addOverlay(new BMap.Marker(pp1));    //add marker
+    }
+    var local = new BMap.LocalSearch(map, { //search
+      onSearchComplete: showResults1
+    });
+    local.search(myValue1);
+  }
+
+  function setPlace2(){
+ //   map.clearOverlays();    
+    function showResults2(){
+      var pp2 = local.getResults().getPoi(0).point;    
+  //    map.centerAndZoom(pp2, 18);
+      map.addOverlay(new BMap.Marker(pp2));    
+    }
+    var local = new BMap.LocalSearch(map, { 
+      onSearchComplete: showResults2
+    });
+    local.search(myValue2);
+  }
+
+var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME,BMAP_DRIVING_POLICY_LEAST_DISTANCE,BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
+  $("#result").click(function(){
+    //map.clearOverlays(); 
+    var i=$("#driving_way select").val();
+    var start = myValue1;
+    var end = myValue2;
+    search(start,end,routePolicy[i]); 
+    function search(start,end,route){ 
+      var driving = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: false},policy: route});
+      driving.search(start,end);
+    }
+  });
+
+  $("#refresh").click(function(){
+     location.reload()
+  });
+
+
+</script>
