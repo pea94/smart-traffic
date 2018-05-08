@@ -13,13 +13,13 @@ def index():
 
     #create list n_car to save the number of cars passing through each intersection.     
     n_car=[]
-    for i in range(20):
-        n_car.append(randint(0,150))
+    for i in range(10):
+        n_car.append(randint(0,50))
 
     #create array avg_speed save the average speed of cars passing through each intersection. 
 
     avg_speed=[]
-    for i in range(20):
+    for i in range(10):
         avg_speed.append(randint(10,60))
 
     return render_template('index.html', colors=colors, n_car=n_car, avg_speed=avg_speed)

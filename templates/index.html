@@ -6,11 +6,11 @@
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <title>TrafficTracker</title>
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Changa">
-        <style>
+        <style type="text/css">
             body,
             html {
-                width: 98%;
-                height: 100%;
+                width: 80%;
+                height: 80%;
                 margin: 10px;
                 font-family: "courier";
                 background-color: #EAEDED;
@@ -64,41 +64,12 @@
             
             <div class="main-header "> &nbsp;TrafficTracker</div>
         </header>
-
-        <div id="start">
-            <font color="#0E6655">start:</font> <input type="text" id="suggestId1" size="30" />
-        </div>
-
-        <div id="end">
-            <font color="#0E6655">end: </font><input type="text" id="suggestId2" size="30" />
-        </div>
-
-        <div id="searchResultPanel1" style="border:1px solid #82E0AA;width:150px;height:auto; display:none;">
-        </div>
-
-        <div id="searchResultPanel2" style="border:1px solid #82E0AA;width:150px;height:auto; display:none;">
-        </div>
-
-        <div id="driving_way">
-            <select>
-            <option value="0">minimum time</option>
-            <option value="1">shortest path</option>
-            <option value="2">avoid highway</option>
-            </select>
-            <input class="button" id="result" value="search" />
-        </div>
-
-        <div id="refresh"><input class="button" value="refresh" />
-        </div>
-        
-        <div>
+    
+        <div id="">
             <label>Time: <input type="time" name="field1" id="field1"/></label>
             <input type="button" class="button" onclick="processData('field1')" value="submit"/>
         </div>
         
-        
-
-
         <div id="allmap">
             <p class="map"></p>
         </div>
@@ -118,7 +89,7 @@
 
 <script type="text/javascript">
     var map = new BMap.Map("allmap");
-    map.centerAndZoom(new BMap.Point(121.130400, 41.1256), 18);
+    map.centerAndZoom(new BMap.Point(121.135210, 41.12380), 18);
 
     var top_right_navigation = new BMap.NavigationControl({
         anchor: BMAP_ANCHOR_TOP_RIGHT,
@@ -267,13 +238,11 @@
     var myCompOverlay9 = new ComplexCustomOverlay(point9, "camera9", mouseoverTxt9);
     var myCompOverlay10 = new ComplexCustomOverlay(point10, "camera10", mouseoverTxt10);
     
-
     map.addOverlay(myCompOverlay1);
     map.addOverlay(myCompOverlay2);
     map.addOverlay(myCompOverlay3);
     map.addOverlay(myCompOverlay4);
     map.addOverlay(myCompOverlay5);
-    
     map.addOverlay(myCompOverlay6);
     map.addOverlay(myCompOverlay7);
     map.addOverlay(myCompOverlay8);
@@ -281,173 +250,578 @@
     map.addOverlay(myCompOverlay10);
     
     //bring in route color
-    var color1
-    var color2
-    var color3
-    var color4
+    var color1 // heavy traffic
+    var color2 // crowded
+    var color3 // moderate
+    var color4 // normal
 
     color1 = '{{colors[0]}}'
     color2 = '{{colors[1]}}'
     color3 = '{{colors[2]}}'
     color4 = '{{colors[3]}}'
+
+    $route1_cars = carNumber1 + carNumber2;
+    $route1_avg_speed = speed1 + speed2 / 100; 
+
+    if($route1_cars >=200){
+        var polyline1 = new BMap.Polyline([
+            point1, point2
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline1);
+    }else if($route1_cars >150 && $route1_cars <200){
+        var polyline1 = new BMap.Polyline([
+            point1, point2
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline1);
+    }else if($route1_cars >100 && $route1_cars <150){
+        var polyline1 = new BMap.Polyline([
+            point1, point2
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline1);
+
+    }else if($route1_cars <100){
+        var polyline1 = new BMap.Polyline([
+            point1, point2
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline1);
+    }
+
+    $route2_cars = carNumber2 + carNumber3;
+    $route2_avg_speed = speed2 + speed3 / 100; 
+
+    if($route2_cars >=200){
+        var polyline2 = new BMap.Polyline([
+            point2, point3
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline2);
+    }else if($route2_cars >150 && $route2_cars <200){
+        var polyline2 = new BMap.Polyline([
+            point2, point3
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline2);
+
+    }else if($route2_cars >100 && $route2_cars <150){
+        var polyline2 = new BMap.Polyline([
+            point2, point3
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline2);
+
+    }else if($route2_cars <100){
+        var polyline2 = new BMap.Polyline([
+            point2, point3
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline2);
+    }
+
+    $route3_cars = carNumber3 + carNumber4;
+    $route3_avg_speed = speed3 + speed4 / 100; 
+
+    if($route3_cars >=200){
+        var polyline3 = new BMap.Polyline([
+            point3, point4
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline3);
+    }else if($route3_cars >150 && $route3_cars <200){
+        var polyline3 = new BMap.Polyline([
+            point3, point4
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline3);
+
+    }else if($route3_cars >100 && $route3_cars < 150){
+        var polyline3 = new BMap.Polyline([
+            point3, point4
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline3);
+
+    }else if($route3_cars <100){
+        var polyline3 = new BMap.Polyline([
+            point3, point4
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline3);
+    }
+
+    $route4_cars = carNumber4 + carNumber5;
+    $route4_avg_speed = speed4 + speed5 / 100; 
+
+    if($route4_cars >=200){
+        var polyline4 = new BMap.Polyline([
+            point4, point5
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline4);
+    }else if($route4_cars >150 && $route4_cars <200){
+        var polyline4 = new BMap.Polyline([
+            point4, point5
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline4);
+
+    }else if($route4_cars >100 && $route4_cars < 150){
+        var polyline4 = new BMap.Polyline([
+            point4, point5
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline4);
+
+    }else if($route4_cars <100){
+        var polyline4 = new BMap.Polyline([
+            point4, point5
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline4);
+    }
+
+    $route5_cars = carNumber5 + carNumber6;
+    $route5_avg_speed = speed5 + speed6 / 100; 
+
+    if($route5_cars >=200){
+        var polyline5 = new BMap.Polyline([
+            point5, point6
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline5);
+    }else if($route5_cars >150 && $route5_cars <200){
+        var polyline5 = new BMap.Polyline([
+            point5, point6
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline5);
+
+    }else if($route5_cars >100 && $route5_cars < 150){
+        var polyline5 = new BMap.Polyline([
+            point5, point6
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline5);
+
+    }else if($route5_cars <=100){
+        var polyline5 = new BMap.Polyline([
+            point5, point6
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline5);
+    }
+
+    $route6_cars = carNumber6 + carNumber7;
+    $route6_avg_speed = speed6 + speed7 / 100; 
+
+    if($route6_cars >=200){
+        var polyline6 = new BMap.Polyline([
+            point6, point7
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline6);
+    }else if($route6_cars >150 && $route6_cars <200){
+        var polyline6 = new BMap.Polyline([
+            point6, point7
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline6);
+
+    }else if($route6_cars >100 && $route6_cars < 150){
+        var polyline6 = new BMap.Polyline([
+            point6, point7
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline6);
+
+    }else if($route6_cars <=100){
+        var polyline6 = new BMap.Polyline([
+            point6, point7
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline6);
+    }
+
+    $route7_cars = carNumber7 + carNumber8;
+    $route7_avg_speed = speed7 + speed8 / 100; 
+
+    if($route7_cars >=200){
+        var polyline7 = new BMap.Polyline([
+            point7, point8
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline7);
+    }else if($route7_cars >150 && $route7_cars <200){
+        var polyline7 = new BMap.Polyline([
+            point7, point8
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline7);
+
+    }else if($route7_cars >100 && $route7_cars < 150){
+        var polyline7 = new BMap.Polyline([
+            point7, point8
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline7);
+
+    }else if($route7_cars <=100){
+        var polyline7 = new BMap.Polyline([
+            point7, point8
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline7);
+    }
     
-    var polyline1 = new BMap.Polyline([
-        point1, point2
-    ], {
-        strokeColor: color1,
-        strokeWeight: 6,
-        strokeOpacity: 0.5
-    });
-    map.addOverlay(polyline1);
+    $route8_cars = carNumber8 + carNumber9;
+    //$route8_avg_speed = speed7 + speed7 / 100; 
 
-    var polyline2 = new BMap.Polyline([
-        point2, point3
-    ], {
-        strokeColor: color2,
-        strokeWeight: 6,
-        strokeOpacity: 0.5
-    });
-    map.addOverlay(polyline2);
+    if($route8_cars >=200){
+        var polyline8 = new BMap.Polyline([
+            point8, point9
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline8);
+    }else if($route8_cars >150 && $route8_cars <200){
+        var polyline8 = new BMap.Polyline([
+            point8, point9
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline8);
 
-    var polyline3 = new BMap.Polyline([
-        point3, point4
-    ], {
-        strokeColor: color3,
-        strokeWeight: 6,
-        strokeOpacity: 0.5
-    });
-    map.addOverlay(polyline3);
+    }else if($route8_cars >100 && $route8_cars <=150){
+        var polyline8 = new BMap.Polyline([
+            point8, point9
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline8);
 
-    var polyline4 = new BMap.Polyline([
-        point4, point5
-    ], {
-        strokeColor: color4,
-        strokeWeight: 6,
-        strokeOpacity: 0.5
-    });
-    map.addOverlay(polyline4);
-
-    function G(id) {
-        return document.getElementById(id);
+    }else if($route8_cars <=100){
+        var polyline8 = new BMap.Polyline([
+            point8, point9
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline8);
     }
 
-    var ac1 = new BMap.Autocomplete( //new an autocomplete object
-        {
-            "input": "suggestId1",
-            "location": map
+    $route9_cars = carNumber9 + carNumber10;
+    //$route8_avg_speed = speed7 + speed7 / 100; 
+
+    if($route9_cars >=200){
+        var polyline9 = new BMap.Polyline([
+            point9, point10
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
         });
-
-    var ac2 = new BMap.Autocomplete( //again
-        {
-            "input": "suggestId2",
-            "location": map
+        map.addOverlay(polyline9);
+    }else if($route9_cars >150 && $route9_cars <200){
+        var polyline9 = new BMap.Polyline([
+            point9, point10
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
         });
+        map.addOverlay(polyline9);
 
-    ac1.addEventListener("onhighlight", function(e) { //event when mouse on list
-        var str = "";
-        var _value = e.fromitem.value;
-        var value1 = "";
-        if (e.fromitem.index > -1) {
-            value1 = _value.province + _value.city + _value.district + _value.street + _value.business;
-        }
-        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value1;
-
-        value1 = "";
-        if (e.toitem.index > -1) {
-            _value = e.toitem.value;
-            value1 = _value.province + _value.city + _value.district + _value.street + _value.business;
-        }
-        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value1;
-        G("searchResultPanel1").innerHTML = str;
-    });
-
-    ac2.addEventListener("onhighlight", function(e) {
-        var str = "";
-        var _value = e.fromitem.value;
-        var value2 = "";
-        if (e.fromitem.index > -1) {
-            value2 = _value.province + _value.city + _value.district + _value.street + _value.business;
-        }
-        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value2;
-
-        value2 = "";
-        if (e.toitem.index > -1) {
-            _value = e.toitem.value;
-            value2 = _value.province + _value.city + _value.district + _value.street + _value.business;
-        }
-        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value2;
-        G("searchResultPanel2").innerHTML = str;
-    });
-
-    var myValue1;
-    ac1.addEventListener("onconfirm", function(e) { //event when click list
-        var _value = e.item.value;
-        myValue1 = _value.province + _value.city + _value.district + _value.street + _value.business;
-        G("searchResultPanel1").innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue1;
-        setPlace1();
-    });
-
-    var myValue2;
-    ac2.addEventListener("onconfirm", function(e) { //
-        var _value = e.item.value;
-        myValue2 = _value.province + _value.city + _value.district + _value.street + _value.business;
-        G("searchResultPanel2").innerHTML = "onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue2;
-        setPlace2();
-    });
-
-    function setPlace1() {
-        //   map.clearOverlays();    //clear all overlays on the map
-        function showResults1() {
-            var pp1 = local.getResults().getPoi(0).point; //get the first poi
-            //    map.centerAndZoom(pp1, 18);
-            map.addOverlay(new BMap.Marker(pp1)); //add marker
-        }
-        var local = new BMap.LocalSearch(map, { //search
-            onSearchComplete: showResults1
+    }else if($route9_cars >100 && $route9_cars <=150){
+        var polyline9 = new BMap.Polyline([
+            point9, point10
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
         });
-        local.search(myValue1);
+        map.addOverlay(polyline9);
+
+    }else if($route9_cars <=100){
+        var polyline9 = new BMap.Polyline([
+            point9, point10
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline9);
     }
 
-    function setPlace2() {
-        //   map.clearOverlays();    
-        function showResults2() {
-            var pp2 = local.getResults().getPoi(0).point;
-            //    map.centerAndZoom(pp2, 18);
-            map.addOverlay(new BMap.Marker(pp2));
-        }
-        var local = new BMap.LocalSearch(map, {
-            onSearchComplete: showResults2
+    $route10_cars = carNumber10 + carNumber1;
+    //$route8_avg_speed = speed7 + speed7 / 100; 
+
+    if($route10_cars >=200){
+        var polyline10 = new BMap.Polyline([
+            point10, point1
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
         });
-        local.search(myValue2);
+        map.addOverlay(polyline10);
+    }else if($route10_cars >150 && $route10_cars <200){
+        var polyline10 = new BMap.Polyline([
+            point10, point1
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline10);
+
+    }else if($route10_cars >100 && $route10_cars <=150){
+        var polyline10 = new BMap.Polyline([
+            point10, point1
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline10);
+
+    }else if($route10_cars <=100){
+        var polyline10 = new BMap.Polyline([
+            point10, point1
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline10);
     }
 
-    var routePolicy = [BMAP_DRIVING_POLICY_LEAST_TIME, BMAP_DRIVING_POLICY_LEAST_DISTANCE, BMAP_DRIVING_POLICY_AVOID_HIGHWAYS];
-    $("#result").click(function() {
-        //map.clearOverlays(); 
-        var i = $("#driving_way select").val();
-        var start = myValue1;
-        var end = myValue2;
-        search(start, end, routePolicy[i]);
+    $route11_cars = carNumber2 + carNumber9;
+    //$route8_avg_speed = speed7 + speed7 / 100; 
 
-        function search(start, end, route) {
-            var driving = new BMap.DrivingRoute(map, {
-                renderOptions: {
-                    map: map,
-                    autoViewport: false
-                },
-                policy: route
-            });
-            driving.search(start, end);
-        }
-    });
+    if($route11_cars >=200){
+        var polyline11 = new BMap.Polyline([
+            point2, point9
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline11);
+    }else if($route11_cars >150 && $route11_cars <200){
+        var polyline11 = new BMap.Polyline([
+            point2, point9
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline11);
+
+    }else if($route11_cars >100 && $route11_cars <=150){
+        var polyline11 = new BMap.Polyline([
+            point2, point9
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline11);
+
+    }else if($route11_cars <=100){
+        var polyline11 = new BMap.Polyline([
+            point2, point9
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline11);
+    }
+
+    $route12_cars = carNumber3 + carNumber7;
+    //$route8_avg_speed = speed7 + speed7 / 100; 
+
+    if($route12_cars >=200){
+        var polyline12 = new BMap.Polyline([
+            point3, point7
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline12);
+    }else if($route12_cars >150 && $route12_cars <200){
+        var polyline12 = new BMap.Polyline([
+            point3, point7
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline12);
+
+    }else if($route12_cars >100 && $route12_cars <=150){
+        var polyline12 = new BMap.Polyline([
+            point3, point7
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline12);
+
+    }else if($route12_cars <100){
+        var polyline12 = new BMap.Polyline([
+            point3, point7
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline12);
+    }
+    $route13_cars = carNumber4 + carNumber7;
+    //$route8_avg_speed = speed7 + speed7 / 100; 
+
+    if($route13_cars >=200){
+        var polyline13 = new BMap.Polyline([
+            point4, point7
+        ], {
+            strokeColor: color1,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline13);
+    }else if($route13_cars >150 && $route13_cars <200){
+        var polyline13 = new BMap.Polyline([
+            point4, point7
+        ], {
+            strokeColor: color2,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline13);
+
+    }else if($route13_cars >100 && $route13_cars <=150){
+        var polyline13 = new BMap.Polyline([
+            point4, point7
+        ], {
+            strokeColor: color3,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline13);
+
+    }else if($route13_cars <=100){
+        var polyline13 = new BMap.Polyline([
+            point4, point7
+        ], {
+            strokeColor: color4,
+            strokeWeight: 6,
+            strokeOpacity: 0.5
+        });
+        map.addOverlay(polyline13);
+    }
 
     $("#refresh").click(function() {
         location.reload()
     });
     
-    
     function processData(f1){
-        var v1 = document.getElementById(f1).value;
-        alert (v1+"\n");
+        location.reload()
     }
 </script>
