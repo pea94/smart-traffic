@@ -1,83 +1,124 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <title>TrafficTracker</title>
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Changa">
+        <style>
+            body,
+            html {
+                width: 98%;
+                height: 100%;
+                margin: 10px;
+                font-family: "courier";
+                background-color: #EAEDED;
+            }
+            #allmap {
+                height: 100%;
+                width: 100%;
+            }
+            #r-result,
+            #r-result table {
+                width: 95%;
+            }
+            div {
+                display: inline-block
+            }
+            p.map {
+                border-style: solid;
+                border-width: medium;
+                border-color: #138D75;
+                margin-top: 10px;
+            }
+            .button {
+                background-color: #117A65;
+                border: none;
+                color: white;
+                padding: 4px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 12px;
+                margin: 4px 4px;
+                cursor: pointer;
+                border-radius: 4px;
+                box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+            }
+            .main-header {
+                text-align: center;
+                width: 100%;
+                height: 490px;
+                font-family: 'Changa', serif;
+                font-size: 90px;
+                --background-image: url("/main3.jpg");
+                color: white;
+                text-shadow: 1px 1px 1px #aaa;        
+            }
+        </style>
+    </head>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <title>TrafficTracker</title>
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Changa">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <body>
+        <header class="main-header" role="banner">
+            
+            <div class="main-header "> &nbsp;TrafficTracker</div>
+        </header>
 
-
-
-</head>
-
-
-<body>
-    <header class="main-header" role="banner">
-        
-        <div class="main-header "> &nbsp;TrafficTracker</div>
-    </header>
-
-    <div id="start">
-        <font color="#0E6655">start:</font> <input type="text" id="suggestId1" size="30" />
-    </div>
-
-    <div id="end">
-        <font color="#0E6655">end: </font><input type="text" id="suggestId2" size="30" />
-    </div>
-
-    <div id="searchResultPanel1" style="border:1px solid #82E0AA;width:150px;height:auto; display:none;">
-    </div>
-
-    <div id="searchResultPanel2" style="border:1px solid #82E0AA;width:150px;height:auto; display:none;">
-    </div>
-
-    <div id="driving_way">
-        <select>
-          <option value="0">minimum time</option>
-          <option value="1">shortest path</option>
-          <option value="2">avoid highway</option>
-        </select>
-        <input class="button" id="result" value="search" />
-    </div>
-
-    <div id="refresh"><input class="button" value="refresh" />
-    </div>
-    
-    <div>
-        <label>Time: <input type="time" name="field1" id="field1"/></label>
-        <input type="button" class="button" onclick="processData('field1')" value="submit"/>
-    </div>
-    
-    
-
-
-    <div id="allmap">
-        <p class="map"></p>
-    </div>
-
-    <div id="r-result"></div>
-
-    <footer>
-        <div>
-            <p>All rights reserved by Liaoning University of Technology</p>
+        <div id="start">
+            <font color="#0E6655">start:</font> <input type="text" id="suggestId1" size="30" />
         </div>
-    </footer>
-</body>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DcoirgVzBcSqhqr82bhY2VFe5dIRpLP8"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
 
+        <div id="end">
+            <font color="#0E6655">end: </font><input type="text" id="suggestId2" size="30" />
+        </div>
+
+        <div id="searchResultPanel1" style="border:1px solid #82E0AA;width:150px;height:auto; display:none;">
+        </div>
+
+        <div id="searchResultPanel2" style="border:1px solid #82E0AA;width:150px;height:auto; display:none;">
+        </div>
+
+        <div id="driving_way">
+            <select>
+            <option value="0">minimum time</option>
+            <option value="1">shortest path</option>
+            <option value="2">avoid highway</option>
+            </select>
+            <input class="button" id="result" value="search" />
+        </div>
+
+        <div id="refresh"><input class="button" value="refresh" />
+        </div>
+        
+        <div>
+            <label>Time: <input type="time" name="field1" id="field1"/></label>
+            <input type="button" class="button" onclick="processData('field1')" value="submit"/>
+        </div>
+        
+        
+
+
+        <div id="allmap">
+            <p class="map"></p>
+        </div>
+
+        <div id="r-result"></div>
+
+        <footer>
+            <div>
+                <p>All rights reserved by Liaoning University of Technology</p>
+            </div>
+        </footer>
+    </body>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=DcoirgVzBcSqhqr82bhY2VFe5dIRpLP8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 </html>
 
-
 <script type="text/javascript">
     var map = new BMap.Map("allmap");
-    map.centerAndZoom(new BMap.Point(121.130945, 41.1239), 20);
-
+    map.centerAndZoom(new BMap.Point(121.130400, 41.1256), 18);
 
     var top_right_navigation = new BMap.NavigationControl({
         anchor: BMAP_ANCHOR_TOP_RIGHT,
@@ -85,17 +126,27 @@
     });
     map.addControl(top_right_navigation);
 
-    var point1 = new BMap.Point(121.130945, 41.123901);
-    var point2 = new BMap.Point(121.132790, 41.124466);
-    var point3 = new BMap.Point(121.134414, 41.123299);
-    var point4 = new BMap.Point(121.136012, 41.124153);
-    var point5 = new BMap.Point(121.137432, 41.123977);
+    var location1 = "121.130600, 41.1256";
+    var location2 = "121.132790, 41.1255";
+    var location3 = "121.134220, 41.1253";
+    var location4 = "121.135550, 41.1252";
+    var location5 = "121.136800, 41.1251";
+    var location6 = "121.136580, 41.12366";
+    var location7 = "121.135210, 41.12380";
+    var location8 = "121.135250, 41.1220";
+    var location9 = "121.132190, 41.1217";
+    var location10 = "121.131170,41.1216";
 
-    var point6 = new BMap.Point(121.138341, 41.123863);
-    var point7 = new BMap.Point(121.139567, 41.123832);
-    var point8 = new BMap.Point(121.140683, 41.123645);
-    var point9 = new BMap.Point(121.130832, 41.122462);
-    var point10 = new BMap.Point(121.133932, 41.122098);
+    var point1 = new BMap.Point(121.130600, 41.1256);
+    var point2 = new BMap.Point(121.132790, 41.1255);
+    var point3 = new BMap.Point(121.134220, 41.1253);
+    var point4 = new BMap.Point(121.135550, 41.1252);
+    var point5 = new BMap.Point(121.136800, 41.1251);
+    var point6 = new BMap.Point(121.136580, 41.12366);
+    var point7 = new BMap.Point(121.135210, 41.12380);
+    var point8 = new BMap.Point(121.135250, 41.1220);
+    var point9 = new BMap.Point(121.132190, 41.1217);
+    var point10 = new BMap.Point(121.131170,41.1216);
     
 
     function ComplexCustomOverlay(point, text, mouseoverText) {
@@ -158,47 +209,58 @@
         this._div.style.top = pixel.y - 30 + "px";
     }
 
-
+    // get the number of cars passing through an intersection.
     var carNumber1 = "{{n_car[0]}}"
     var carNumber2 = "{{n_car[1]}}"
     var carNumber3 = "{{n_car[2]}}"
     var carNumber4 = "{{n_car[3]}}"
-
+    var carNumber5 = "{{n_car[4]}}"
+    var carNumber6 = "{{n_car[5]}}"
+    var carNumber7 = "{{n_car[6]}}"
+    var carNumber8 = "{{n_car[7]}}"
+    var carNumber9 = "{{n_car[8]}}"
+    var carNumber10 = "{{n_car[9]}}"
+    
+    // get the average speed at an intersection.
     var speed1 = "{{avg_speed[0]}}"
     var speed2 = "{{avg_speed[1]}}"
     var speed3 = "{{avg_speed[2]}}"
     var speed4 = "{{avg_speed[3]}}"
-
-
-
+    var speed5 = "{{avg_speed[4]}}"
+    var speed6 = "{{avg_speed[5]}}"
+    var speed7 = "{{avg_speed[6]}}"
+    var speed8 = "{{avg_speed[7]}}"
+    var speed9 = "{{avg_speed[8]}}"
+    var speed10 = "{{avg_speed[9]}}"
+   
+    // display information on the camera label if user moves the mouse on camera label
     var txt1 = "camera1",
-        mouseoverTxt1 = txt1 + " location is: 121.129382,41.114900" + ";  Current No. of car: " + carNumber1 + ";  AverageSpeed: " + speed1;
+        mouseoverTxt1 = txt1 + " location is: "+ location1 + ";  Current No. of car: " + carNumber1 + ";  AverageSpeed: " + speed1;
     var txt2 = "camera2",
-        mouseoverTxt2 = txt2 + " location is: 121.130719,41.115184" + ";  Current No. of car: " + carNumber2 + ";  AverageSpeed: " + speed2;
+        mouseoverTxt2 = txt2 + " location is: "+ location2 + ";  Current No. of car: " + carNumber2 + ";  AverageSpeed: " + speed2;
     var txt3 = "camera3",
-        mouseoverTxt3 = txt3 + " location is: 121.128413,41.113173" + ";  Current No. of car: " + carNumber3 + ";  AverageSpeed: " + speed3;
+        mouseoverTxt3 = txt3 + " location is: "+ location3 + ";  Current No. of car: " + carNumber3 + ";  AverageSpeed: " + speed3;
     var txt4 = "camera4",
-        mouseoverTxt4 = txt4 + " location is: 121.127496,41.112951" + ";  Current No. of car: " + carNumber4 + ";  AverageSpeed: " + speed4;
+        mouseoverTxt4 = txt4 + " location is: "+ location4 + ";  Current No. of car: " + carNumber4 + ";  AverageSpeed: " + speed4;
     var txt5 = "camera5",
-        mouseoverTxt5 = txt5 + " location is: 121.127496,41.112951";
+        mouseoverTxt5 = txt5 + " location is: "+ location5 + ";  Current No. of car: " + carNumber5 + ";  AverageSpeed: " + speed5;
     
     var txt6 = "camera6",
-        mouseoverTxt6 = txt6 + " location is: 121.129382,41.114900" + ";  Current No. of car: " + carNumber1 + ";  AverageSpeed: " + speed1;
+        mouseoverTxt6 = txt6 + " location is: "+ location6 + ";  Current No. of car: " + carNumber6 + ";  AverageSpeed: " + speed6;
     var txt7 = "camera7",
-        mouseoverTxt7 = txt7 + " location is: 121.130719,41.115184" + ";  Current No. of car: " + carNumber2 + ";  AverageSpeed: " + speed2;
+        mouseoverTxt7 = txt7 + " location is: "+ location7 + ";  Current No. of car: " + carNumber7 + ";  AverageSpeed: " + speed7;
     var txt8 = "camera8",
-        mouseoverTxt8 = txt8 + " location is: 121.128413,41.113173" + ";  Current No. of car: " + carNumber3 + ";  AverageSpeed: " + speed3;
+        mouseoverTxt8 = txt8 + " location is: "+ location8 + ";  Current No. of car: " + carNumber8 + ";  AverageSpeed: " + speed8;
     var txt9 = "camera9",
-        mouseoverTxt9 = txt9 + " location is: 121.127496,41.112951" + ";  Current No. of car: " + carNumber4 + ";  AverageSpeed: " + speed4;
+        mouseoverTxt9 = txt9 + " location is: " + location9+ ";  Current No. of car: " + carNumber9 + ";  AverageSpeed: " + speed9;
     var txt10 = "camera10",
-        mouseoverTxt10 = txt10 + " location is: 121.127496,41.112951";
+        mouseoverTxt10 = txt10 + " location is: "+ location10 + ";  Current No. of car: " + carNumber10 + ";  AverageSpeed: " + speed10;
 
     var myCompOverlay1 = new ComplexCustomOverlay(point1, "camera1", mouseoverTxt1);
     var myCompOverlay2 = new ComplexCustomOverlay(point2, "camera2", mouseoverTxt2);
     var myCompOverlay3 = new ComplexCustomOverlay(point3, "camera3", mouseoverTxt3);
     var myCompOverlay4 = new ComplexCustomOverlay(point4, "camera4", mouseoverTxt4);
     var myCompOverlay5 = new ComplexCustomOverlay(point5, "camera5", mouseoverTxt5);
-    
     var myCompOverlay6 = new ComplexCustomOverlay(point6, "camera6", mouseoverTxt6);
     var myCompOverlay7 = new ComplexCustomOverlay(point7, "camera7", mouseoverTxt7);
     var myCompOverlay8 = new ComplexCustomOverlay(point8, "camera8", mouseoverTxt8);
@@ -218,11 +280,7 @@
     map.addOverlay(myCompOverlay9);
     map.addOverlay(myCompOverlay10);
     
- 
-
-
     //bring in route color
-
     var color1
     var color2
     var color3
@@ -232,7 +290,7 @@
     color2 = '{{colors[1]}}'
     color3 = '{{colors[2]}}'
     color4 = '{{colors[3]}}'
-
+    
     var polyline1 = new BMap.Polyline([
         point1, point2
     ], {
