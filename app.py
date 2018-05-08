@@ -14,10 +14,10 @@ def index():
     #create list n_car to save the number of cars passing through each intersection.     
     n_car=[]
     for i in range(20):
-    n_car.append(randint(0,150))
+        n_car.append(randint(0,150))
 
     #create array avg_speed save the average speed of cars passing through each intersection. 
-    
+
     avg_speed=[]
     for i in range(20):
         avg_speed.append(randint(10,60))
